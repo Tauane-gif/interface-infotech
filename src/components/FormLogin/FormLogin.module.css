@@ -79,12 +79,12 @@
 }
 
 .form-group input.input-error {
-  border-color: #dc2626;
+  border-color: #6c64e0;
   background-color: #fef2f2;
 }
 
 .form-error {
-  color: #dc2626;
+  color: #6c64e0;
   font-size: 0.8rem;
   margin-top: 0.35rem;
 }

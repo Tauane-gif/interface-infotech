@@ -2,6 +2,7 @@ import { useState, type JSX } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import AuthRequests from "../../fetch/AuthRequests";
 import appIcon from "../../assets/app-icon.png";
+import fotoPerfil from "../../assets/foto-perfil.png";
 
 function Navegacao(): JSX.Element {
     const [menuAberto, setMenuAberto] = useState(false);
@@ -16,7 +17,7 @@ function Navegacao(): JSX.Element {
 
     const nome = localStorage.getItem('nome') || 'Usuário';
     const email = localStorage.getItem('email') || '';
-    const avatarImage = "https://primefaces.org/cdn/primereact/images/avatar/amyelsner.png";
+    const avatarImage = fotoPerfil;
 
     const links = [
         { label: 'Home', icon: 'pi pi-home', url: '/' },
@@ -28,9 +29,9 @@ function Navegacao(): JSX.Element {
 
     return (
         <header className="bg-slate-700 relative z-50">
-            {/* Barra principal */}
+          
             <div className="flex items-center justify-between px-4 py-3 min-h-[64px]">
-                {/* Logo + Links (desktop) */}
+             
                 <div className="flex items-center gap-2">
                     <img src={appIcon} alt="logo" className="h-10 w-auto" />
                     <nav className="hidden sm:flex items-center gap-1 ml-4">
@@ -47,7 +48,7 @@ function Navegacao(): JSX.Element {
                     </nav>
                 </div>
 
-            {/* Botão hambúrguer (mobile) */}
+      
 <button
     className="sm:hidden text-white p-3 rounded bg-slate-600 hover:bg-slate-500 transition-colors flex items-center gap-2"
     onClick={() => setMenuAberto(!menuAberto)}
@@ -57,7 +58,6 @@ function Navegacao(): JSX.Element {
     <span className="text-sm">Menu</span>
 </button>
 
-                {/* Área do usuário (desktop) */}
                 <div className="hidden sm:flex items-center gap-3">
                     {isAuthenticated ? (
                         <>

@@ -108,7 +108,7 @@ function DetalhesProduto({ id_produto }: DetalhesProdutoProps): JSX.Element {
                                 <div className="flex flex-col">
                                     <span className="text-xs font-bold uppercase tracking-wider text-gray-400">Categoria</span>
                                     <span className="font-medium text-gray-700">
-                                        {produto.categoria?.nome || "Sem categoria"}
+                                        {produto.categoria_id ? `Categoria ${produto.categoria_id}` : "Sem categoria"}
                                     </span>
                                 </div>
                             </div>

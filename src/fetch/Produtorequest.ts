@@ -1,67 +1,120 @@
-import api from "./api"
 import type { ProdutoDTO } from "../dto/ProdutoDTO";
 
-const STORAGE_KEY = "produtos-interface-infotech";
+const API_URL = import.meta.env.VITE_API_SERVER_URL;
 
-const produtosPadrao: ProdutoDTO[] = [
-  {
-    id_categoria: 1,
-    codigo: "P001",
-    nome: "Teclado Mecânico",
-    preco_unitario: 249.9,
-    quantidade_disponivel: 12,
-    quantidade_minima: 3,
-  },
-  {
-    id_categoria: 1,
-    codigo: "P002",
-    nome: "Mouse Gamer",
-    preco_unitario: 179.9,
-    quantidade_disponivel: 20,
-    quantidade_minima: 5,
-  },
-  {
-    id_categoria: 2,
-    codigo: "P003",
-    nome: "Monitor 24\"",
-    preco_unitario: 899.0,
-    quantidade_disponivel: 8,
-    quantidade_minima: 2,
-  },
-];
+class ProdutoRequests {
+    private serverUrl;
+    private endpointProduto;
 
-function lerProdutosLocais(): ProdutoDTO[] {
-  try {
-    const salvo = localStorage.getItem(STORAGE_KEY);
-
-    if (salvo) {
-      return JSON.parse(salvo) as ProdutoDTO[];
+    constructor() {
+        this.serverUrl = API_URL;
+        this.endpointProduto = '/api/produtos';
     }
 
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(produtosPadrao));
-    return produtosPadrao;
-  } catch {
-    return produtosPadrao;
-  }
+    async obterListaDeProdutos(): Promise<ProdutoDTO[] | undefined> {
+        try {
+            const token = localStorage.getItem('token');
+            const respostaAPI = await fetch(`${this.serverUrl}${this.endpointProduto}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': `${token}`
+                }
+            });
+            if (respostaAPI.ok) {
+                const listaDeProdutos: ProdutoDTO[] = await respostaAPI.json();
+                return listaDeProdutos;
+            } else {
+                throw new Error(`Não foi possível listar os produtos.`);
+            }
+        } catch (error) {
+            console.error(`Erro ao fazer a consulta de produtos. ${error}`);
+            return;
+        }
+    }
+
+    async obterProdutoPorId(id_produto: number): Promise<ProdutoDTO | undefined> {
+        try {
+            const token = localStorage.getItem('token');
+            const respostaAPI = await fetch(`${this.serverUrl}${this.endpointProduto}/${id_produto}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': `${token}`
+                }
+            });
+            if (respostaAPI.ok) {
+                const produto: ProdutoDTO = await respostaAPI.json();
+                return produto;
+            } else {
+                throw new Error("Não foi possível buscar o produto.");
+            }
+        } catch (error) {
+            console.error(`Erro ao fazer a consulta de produto por ID. ${error}`);
+            return;
+        }
+    }
+
+    async enviarFormularioProduto(formProduto: ProdutoDTO): Promise<boolean> {
+        try {
+            const token = localStorage.getItem('token');
+            const respostaAPI = await fetch(`${this.serverUrl}${this.endpointProduto}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': `${token}`
+                },
+                body: JSON.stringify(formProduto)
+            });
+            if (!respostaAPI.ok) throw new Error(`Erro ${respostaAPI.status}: ${respostaAPI.statusText}`);
+            console.info(`${respostaAPI.status}: ${respostaAPI.statusText}`);
+            return true;
+        } catch (error) {
+            console.error(`Erro ao fazer consulta à API. ${error}`);
+            return false;
+        }
+    }
+
+    async atualizarProduto(id_produto: number, formProduto: ProdutoDTO): Promise<boolean> {
+        try {
+            const token = localStorage.getItem('token');
+            const respostaAPI = await fetch(`${this.serverUrl}${this.endpointProduto}/${id_produto}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': `${token}`
+                },
+                body: JSON.stringify(formProduto)
+            });
+            if (!respostaAPI.ok) throw new Error(`Erro ${respostaAPI.status}: ${respostaAPI.statusText}`);
+            console.info(`${respostaAPI.status}: ${respostaAPI.statusText}`);
+            return true;
+        } catch (error) {
+            console.error(`Erro ao fazer consulta à API. ${error}`);
+            return false;
+        }
+    }
+
+    async removerProduto(id_produto: number): Promise<boolean> {
+        try {
+            const token = localStorage.getItem('token');
+            const respostaAPI = await fetch(`${this.serverUrl}${this.endpointProduto}/${id_produto}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-access-token': `${token}`
+                }
+            });
+            if (!respostaAPI.ok) {
+                const errorData = await respostaAPI.json().catch(() => ({}));
+                const errorMessage = errorData.mensagem || `Erro ${respostaAPI.status}: ${respostaAPI.statusText}`;
+                throw new Error(errorMessage);
+            }
+            console.info(`${respostaAPI.status} ${respostaAPI.statusText}`);
+            return true;
+        } catch (error) {
+            console.error(`Erro ao fazer consulta à API. ${error}`);
+            throw error;
+        }
+    }
 }
 
-export async function listarProdutos() {
-  try {
-    const response = await api.get("/api/produtos");
-    return response.data;
-  } catch {
-    return lerProdutosLocais();
-  }
-}
-
-export async function cadastrarProduto(produto: ProdutoDTO) {
-  try {
-    const response = await api.post("/api/produtos", produto);
-    return response.data;
-  } catch {
-    const produtos = lerProdutosLocais();
-    const atualizados = [...produtos, produto];
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(atualizados));
-    return produto;
-  }
-}
+export default new ProdutoRequests();

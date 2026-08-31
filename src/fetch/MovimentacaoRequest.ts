@@ -1,91 +1,247 @@
-import api from "./api";
-import type { MovimentacaoDTO } from "../dto/MovimentacaoDTO";
 
-const STORAGE_KEY = "movimentacoes-interface-infotech";
+import type {MovimentacaoDTO} from "../dto/MovimentacaoDTO";
 
-const movimentacoesPadrao: MovimentacaoDTO[] = [
-  {
-    id_movimentacao: 1,
-    id_produto: 1,
-    tipo: "ENTRADA",
-    motivo: "COMPRA",
-    quantidade: 10,
-    preco_unitario_praticado: 150.0,
-    valor_total: 1500.0,
-    observacao: "Compra de material para estoque",
-    data_movimentacao: new Date().toISOString(),
-  },
-  {
-    id_movimentacao: 2,
-    id_produto: 2,
-    tipo: "SAIDA",
-    motivo: "VENDA",
-    quantidade: 3,
-    preco_unitario_praticado: 180.0,
-    valor_total: 540.0,
-    observacao: "Venda registrada no caixa",
-    data_movimentacao: new Date().toISOString(),
-  },
-];
+const API_URL = import.meta.env.VITE_API_SERVER_URL;
 
-function lerMovimentacoesLocais(): MovimentacaoDTO[] {
-  try {
-    const salvo = localStorage.getItem(STORAGE_KEY);
+class MovimentacaoRequests {
 
-    if (salvo) {
-      return JSON.parse(salvo) as MovimentacaoDTO[];
+    private serverUrl;
+    private endpointMovimentacao;
+
+    constructor() {
+        this.serverUrl = API_URL;
+        this.endpointMovimentacao = '/api/movimentacoes';
     }
 
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(movimentacoesPadrao));
-    return movimentacoesPadrao;
-  } catch {
-    return movimentacoesPadrao;
-  }
+    async obterListaDeMovimentacoes() {
+
+        try {
+
+            const token = localStorage.getItem('token');
+
+            const respostaAPI = await fetch(
+                `${this.serverUrl}${this.endpointMovimentacao}`,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-access-token': `${token}`
+                    }
+                }
+            );
+
+            if (respostaAPI.ok) {
+
+                const listaDeMovimentacoes = await respostaAPI.json();
+
+                return listaDeMovimentacoes;
+
+            } else {
+
+                throw new Error(
+                    `Não foi possível listar as movimentações.`
+                );
+
+            }
+
+        } catch (error) {
+
+            console.error(
+                `Erro ao fazer a consulta de movimentações. ${error}`
+            );
+
+            return;
+
+        }
+    }
+
+
+    async obterMovimentacaoPorId(
+        id_movimentacao: number
+    ): Promise<MovimentacaoDTO | undefined> {
+
+        try {
+
+            const token = localStorage.getItem('token');
+
+            const respostaAPI = await fetch(
+                `${this.serverUrl}${this.endpointMovimentacao}/${id_movimentacao}`,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-access-token': `${token}`
+                    }
+                }
+            );
+
+            if (respostaAPI.ok) {
+
+                const movimentacao: MovimentacaoDTO =
+                    await respostaAPI.json();
+
+                return movimentacao;
+
+            } else {
+
+                throw new Error(
+                    "Não foi possível buscar a movimentação."
+                );
+
+            }
+
+        } catch (error) {
+
+            console.error(
+                `Erro ao fazer a consulta de movimentação por ID. ${error}`
+            );
+
+            return;
+
+        }
+    }
+
+
+    async enviarFormularioMovimentacao(
+        formMovimentacao: MovimentacaoDTO
+    ): Promise<boolean> {
+
+        try {
+
+            const token = localStorage.getItem('token');
+
+            const respostaAPI = await fetch(
+                `${this.serverUrl}${this.endpointMovimentacao}`,
+                {
+                    method: 'POST',
+
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-access-token': `${token}`
+                    },
+
+                    body: JSON.stringify(formMovimentacao)
+                }
+            );
+
+            if (!respostaAPI.ok) {
+                throw new Error(
+                    `Erro ${respostaAPI.status}: ${respostaAPI.statusText}`
+                );
+            }
+
+            console.info(
+                `${respostaAPI.status}: ${respostaAPI.statusText}`
+            );
+
+            return true;
+
+        } catch (error) {
+
+            console.error(
+                `Erro ao fazer consulta à API. ${error}`
+            );
+
+            return false;
+
+        }
+    }
+
+
+    async atualizarMovimentacao(
+        id_movimentacao: number,
+        formMovimentacao: MovimentacaoDTO
+    ): Promise<boolean> {
+
+        try {
+
+            const token = localStorage.getItem('token');
+
+            const respostaAPI = await fetch(
+                `${this.serverUrl}${this.endpointMovimentacao}/${id_movimentacao}`,
+                {
+                    method: 'PUT',
+
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-access-token': `${token}`
+                    },
+
+                    body: JSON.stringify(formMovimentacao)
+                }
+            );
+
+            if (!respostaAPI.ok) {
+                throw new Error(
+                    `Erro ${respostaAPI.status}: ${respostaAPI.statusText}`
+                );
+            }
+
+            console.info(
+                `${respostaAPI.status}: ${respostaAPI.statusText}`
+            );
+
+            return true;
+
+        } catch (error) {
+
+            console.error(
+                `Erro ao fazer consulta à API. ${error}`
+            );
+
+            return false;
+
+        }
+    }
+
+
+    async removerMovimentacao(
+        id_movimentacao: number
+    ): Promise<boolean> {
+
+        try {
+
+            const token = localStorage.getItem('token');
+
+            const respostaAPI = await fetch(
+                `${this.serverUrl}${this.endpointMovimentacao}/${id_movimentacao}`,
+                {
+                    method: 'DELETE',
+
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-access-token': `${token}`
+                    }
+                }
+            );
+
+            if (!respostaAPI.ok) {
+
+                const errorData = await respostaAPI
+                    .json()
+                    .catch(() => ({}));
+
+                const errorMessage =
+                    errorData.mensagem ||
+                    `Erro ${respostaAPI.status}: ${respostaAPI.statusText}`;
+
+                throw new Error(errorMessage);
+            }
+
+            console.info(
+                `${respostaAPI.status} ${respostaAPI.statusText}`
+            );
+
+            return true;
+
+        } catch (error) {
+
+            console.error(
+                `Erro ao fazer consulta à API. ${error}`
+            );
+
+            throw error;
+
+        }
+    }
 }
 
-export async function listarMovimentacoes() {
-  try {
-    const response = await api.get("/api/movimentacoes");
-    return response.data;
-  } catch {
-    return lerMovimentacoesLocais();
-  }
-}
-
-export async function cadastrarMovimentacao(movimentacao: MovimentacaoDTO) {
-  try {
-    const response = await api.post("/api/movimentacoes", movimentacao);
-    return response.data;
-  } catch {
-    const movimentacoes = lerMovimentacoesLocais();
-    const atualizadas = [...movimentacoes, movimentacao];
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(atualizadas));
-    return movimentacao;
-  }
-}
-
-export async function atualizarMovimentacao(id: number, movimentacao: MovimentacaoDTO) {
-  try {
-    const response = await api.put(`/api/movimentacoes/${id}`, movimentacao);
-    return response.data;
-  } catch {
-    const movimentacoes = lerMovimentacoesLocais();
-    const atualizadas = movimentacoes.map((item) =>
-      item.id_movimentacao === id ? { ...item, ...movimentacao } : item,
-    );
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(atualizadas));
-    return { ...movimentacao, id_movimentacao: id };
-  }
-}
-
-export async function excluirMovimentacao(id: number) {
-  try {
-    const response = await api.delete(`/api/movimentacoes/${id}`);
-    return response.data;
-  } catch {
-    const movimentacoes = lerMovimentacoesLocais();
-    const filtradas = movimentacoes.filter((item) => item.id_movimentacao !== id);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(filtradas));
-    return true;
-  }
-}
+export default new MovimentacaoRequests;

@@ -1,17 +1,14 @@
-import type { ProdutoDTO } from "../dto/ProdutoDTO";
-
+import type {ProdutoDTO} from "../dto/ProdutoDTO";
 const API_URL = import.meta.env.VITE_API_SERVER_URL;
 
 class ProdutoRequests {
     private serverUrl;
     private endpointProduto;
-
     constructor() {
         this.serverUrl = API_URL;
         this.endpointProduto = '/api/produtos';
     }
-
-    async obterListaDeProdutos(): Promise<ProdutoDTO[] | undefined> {
+    async obterListaDeProdutos() {
         try {
             const token = localStorage.getItem('token');
             const respostaAPI = await fetch(`${this.serverUrl}${this.endpointProduto}`, {
@@ -21,7 +18,7 @@ class ProdutoRequests {
                 }
             });
             if (respostaAPI.ok) {
-                const listaDeProdutos: ProdutoDTO[] = await respostaAPI.json();
+                const listaDeProdutos = await respostaAPI.json();
                 return listaDeProdutos;
             } else {
                 throw new Error(`Não foi possível listar os produtos.`);
@@ -31,7 +28,6 @@ class ProdutoRequests {
             return;
         }
     }
-
     async obterProdutoPorId(id_produto: number): Promise<ProdutoDTO | undefined> {
         try {
             const token = localStorage.getItem('token');
@@ -52,7 +48,6 @@ class ProdutoRequests {
             return;
         }
     }
-
     async enviarFormularioProduto(formProduto: ProdutoDTO): Promise<boolean> {
         try {
             const token = localStorage.getItem('token');
@@ -64,7 +59,7 @@ class ProdutoRequests {
                 },
                 body: JSON.stringify(formProduto)
             });
-            if (!respostaAPI.ok) throw new Error(`Erro ${respostaAPI.status}: ${respostaAPI.statusText}`);
+            if(!respostaAPI.ok) throw new Error(`Erro ${respostaAPI.status}: ${respostaAPI.statusText}`);
             console.info(`${respostaAPI.status}: ${respostaAPI.statusText}`);
             return true;
         } catch (error) {
@@ -72,7 +67,6 @@ class ProdutoRequests {
             return false;
         }
     }
-
     async atualizarProduto(id_produto: number, formProduto: ProdutoDTO): Promise<boolean> {
         try {
             const token = localStorage.getItem('token');
@@ -84,7 +78,7 @@ class ProdutoRequests {
                 },
                 body: JSON.stringify(formProduto)
             });
-            if (!respostaAPI.ok) throw new Error(`Erro ${respostaAPI.status}: ${respostaAPI.statusText}`);
+            if(!respostaAPI.ok) throw new Error(`Erro ${respostaAPI.status}: ${respostaAPI.statusText}`);
             console.info(`${respostaAPI.status}: ${respostaAPI.statusText}`);
             return true;
         } catch (error) {
@@ -92,7 +86,6 @@ class ProdutoRequests {
             return false;
         }
     }
-
     async removerProduto(id_produto: number): Promise<boolean> {
         try {
             const token = localStorage.getItem('token');
@@ -116,5 +109,4 @@ class ProdutoRequests {
         }
     }
 }
-
-export default new ProdutoRequests();
+export default new ProdutoRequests;

@@ -5,25 +5,6 @@ html, body, #root {
   min-height: 100%;
   width: 100%;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #eef4ff;
-  color: #0f172a;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-body {
-  min-height: 100vh;
-}
-
-button,
-input {
-  font: inherit;
-}
-
-h1,
-h2,
-p {
-  margin-top: 0;
+  background: #000000;
+  color: #2dd4bf;
 }

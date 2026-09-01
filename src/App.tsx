@@ -2,8 +2,6 @@
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import PHome from './pages/PHome/PHome'
-import PLogin from './pages/PLogin/PLogin'
-import PListagemProduto from './pages/PListagemProduto/PListagemProduto'
 
 function App() {
 
@@ -12,11 +10,6 @@ function App() {
 
       <Routes>
         <Route path='/' element={<PHome />} />
-        <Route path='/login' element={<PLogin />} />
-        <Route
-          path='/lista/produtos'
-          element={<PListagemProduto />}
-        />
       </Routes>
     </BrowserRouter>
   )

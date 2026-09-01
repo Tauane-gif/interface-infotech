@@ -68,7 +68,7 @@ function Navegacao(): JSX.Element {
     };
 
     return (
-        <header className="sticky top-0 z-50 border-b border-violet-800 bg-violet-950 shadow-lg">
+        <header className="sticky top-0 z-50 border-b border-teal-900 bg-black shadow-lg">
 
             {/* NAVBAR */}
             <div className="mx-auto flex min-h-16 w-full max-w-[1500px] items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -79,12 +79,12 @@ function Navegacao(): JSX.Element {
                     onClick={() => navegar("/")}
                     className="flex items-center gap-2"
                 >
-                    <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white text-sm font-black text-violet-800 shadow-sm">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-teal-400 text-sm font-black text-black shadow-sm">
                         IT
                     </div>
 
                     <span className="text-xl font-bold tracking-tight text-white">
-                        Info<span className="text-violet-300">Tech</span>
+                        Info<span className="text-teal-400">Tech</span>
                     </span>
                 </button>
 
@@ -100,14 +100,14 @@ function Navegacao(): JSX.Element {
                                 type="button"
                                 onClick={() => navegar(link.url)}
                                 className={`group flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition ${ativo
-                                        ? "bg-violet-800/70 text-white shadow-sm"
-                                        : "text-violet-100 hover:bg-violet-800/50 hover:text-white"
+                                        ? "bg-teal-900/70 text-white shadow-sm"
+                                        : "text-teal-100 hover:bg-teal-900/50 hover:text-white"
                                     }`}
                             >
                                 <i
                                     className={`${link.icon} text-sm ${ativo
-                                            ? "text-violet-300"
-                                            : "text-violet-300/70 group-hover:text-violet-200"
+                                            ? "text-teal-300"
+                                            : "text-teal-300/70 group-hover:text-teal-200"
                                         }`}
                                 />
 
@@ -128,7 +128,7 @@ function Navegacao(): JSX.Element {
                                     {nome}
                                 </p>
 
-                                <p className="max-w-40 truncate text-xs text-violet-300/70">
+                                <p className="max-w-40 truncate text-xs text-teal-300/70">
                                     {email}
                                 </p>
                             </div>
@@ -136,13 +136,13 @@ function Navegacao(): JSX.Element {
                             <img
                                 src={avatarImage}
                                 alt="Avatar do usuário"
-                                className="h-9 w-9 rounded-full border-2 border-violet-700 object-cover"
+                                className="h-9 w-9 rounded-full border-2 border-teal-700 object-cover"
                             />
 
                             <button
                                 type="button"
                                 onClick={sair}
-                                className="flex items-center gap-2 rounded-lg bg-white px-4 py-2 text-sm font-semibold text-violet-800 shadow-sm transition hover:bg-violet-50 active:scale-95"
+                                className="flex items-center gap-2 rounded-lg bg-teal-400 px-4 py-2 text-sm font-semibold text-black shadow-sm transition hover:bg-teal-300 active:scale-95"
                             >
                                 <i className="pi pi-sign-out" />
                                 <span>Sair</span>
@@ -152,7 +152,7 @@ function Navegacao(): JSX.Element {
                         <button
                             type="button"
                             onClick={() => navegar("/login")}
-                            className="flex items-center gap-2 rounded-lg bg-white px-4 py-2 text-sm font-semibold text-violet-800 shadow-sm transition hover:bg-violet-50 active:scale-95"
+                            className="flex items-center gap-2 rounded-lg bg-teal-400 px-4 py-2 text-sm font-semibold text-black shadow-sm transition hover:bg-teal-300 active:scale-95"
                         >
                             <i className="pi pi-sign-in" />
                             <span>Entrar</span>
@@ -167,7 +167,7 @@ function Navegacao(): JSX.Element {
                     onClick={() => setMenuAberto(!menuAberto)}
                     aria-label="Abrir menu"
                     aria-expanded={menuAberto}
-                    className="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-900 text-white transition hover:bg-violet-800 md:hidden"
+                    className="flex h-10 w-10 items-center justify-center rounded-lg bg-teal-950 text-white transition hover:bg-teal-900 md:hidden"
                 >
                     <i
                         className={`pi ${menuAberto
@@ -181,7 +181,7 @@ function Navegacao(): JSX.Element {
 
             {/* MENU MOBILE */}
             {menuAberto && (
-                <div className="border-t border-violet-800 bg-violet-950 px-4 pb-5 pt-3 shadow-lg md:hidden">
+                <div className="border-t border-teal-900 bg-black px-4 pb-5 pt-3 shadow-lg md:hidden">
 
                     <nav className="flex flex-col gap-1">
 
@@ -194,14 +194,14 @@ function Navegacao(): JSX.Element {
                                     type="button"
                                     onClick={() => navegar(link.url)}
                                     className={`flex w-full items-center gap-3 rounded-lg px-4 py-3 text-left text-sm font-medium transition ${ativo
-                                            ? "bg-violet-800/70 text-white"
-                                            : "text-violet-100 hover:bg-violet-800/50 hover:text-white"
+                                            ? "bg-teal-900/70 text-white"
+                                            : "text-teal-100 hover:bg-teal-900/50 hover:text-white"
                                         }`}
                                 >
                                     <i
                                         className={`${link.icon} w-5 text-center ${ativo
-                                                ? "text-violet-300"
-                                                : "text-violet-300/70"
+                                                ? "text-teal-300"
+                                                : "text-teal-300/70"
                                             }`}
                                     />
 
@@ -212,7 +212,7 @@ function Navegacao(): JSX.Element {
 
                     </nav>
 
-                    <div className="my-3 border-t border-violet-800" />
+                    <div className="my-3 border-t border-teal-900" />
 
                     {isAuthenticated ? (
                         <div className="space-y-3">
@@ -222,7 +222,7 @@ function Navegacao(): JSX.Element {
                                 <img
                                     src={avatarImage}
                                     alt="Avatar do usuário"
-                                    className="h-10 w-10 rounded-full border-2 border-violet-700 object-cover"
+                                    className="h-10 w-10 rounded-full border-2 border-teal-700 object-cover"
                                 />
 
                                 <div className="min-w-0">
@@ -230,7 +230,7 @@ function Navegacao(): JSX.Element {
                                         {nome}
                                     </p>
 
-                                    <p className="truncate text-xs text-violet-300/70">
+                                    <p className="truncate text-xs text-teal-300/70">
                                         {email}
                                     </p>
                                 </div>
@@ -240,7 +240,7 @@ function Navegacao(): JSX.Element {
                             <button
                                 type="button"
                                 onClick={sair}
-                                className="flex w-full items-center justify-center gap-2 rounded-lg bg-white px-4 py-3 text-sm font-semibold text-violet-800 transition hover:bg-violet-50"
+                                className="flex w-full items-center justify-center gap-2 rounded-lg bg-teal-400 px-4 py-3 text-sm font-semibold text-black transition hover:bg-teal-300"
                             >
                                 <i className="pi pi-sign-out" />
                                 Sair
@@ -251,7 +251,7 @@ function Navegacao(): JSX.Element {
                         <button
                             type="button"
                             onClick={() => navegar("/login")}
-                            className="flex w-full items-center justify-center gap-2 rounded-lg bg-white px-4 py-3 text-sm font-semibold text-violet-800 transition hover:bg-violet-50"
+                            className="flex w-full items-center justify-center gap-2 rounded-lg bg-teal-400 px-4 py-3 text-sm font-semibold text-black transition hover:bg-teal-300"
                         >
                             <i className="pi pi-sign-in" />
                             Entrar

@@ -12,7 +12,10 @@ function DetalhesCategoria(): JSX.Element {
 
     useEffect(() => {
         async function buscarCategoria() {
-            if (!id) return;
+            if (!id) {
+                setCarregando(false);
+                return;
+            }
 
             const dados = await CategoriaRequests.obterCategoriaPorId(
                 Number(id)
@@ -28,26 +31,28 @@ function DetalhesCategoria(): JSX.Element {
         buscarCategoria();
     }, [id]);
 
+    // Tela de carregamento
     if (carregando) {
         return (
-            <main className="flex flex-1 items-center justify-center">
-                <p className="text-lg text-slate-600">
+            <main className="flex min-h-screen flex-1 items-center justify-center bg-black">
+                <p className="text-lg text-teal-300">
                     Carregando categoria...
                 </p>
             </main>
         );
     }
 
+    // Categoria não encontrada
     if (!categoria) {
         return (
-            <main className="flex flex-1 flex-col items-center justify-center gap-4">
-                <p className="text-lg text-red-600">
+            <main className="flex min-h-screen flex-1 flex-col items-center justify-center gap-4 bg-black">
+                <p className="text-lg text-red-400">
                     Categoria não encontrada.
                 </p>
 
                 <button
                     onClick={() => navigate("/lista/categorias")}
-                    className="rounded-lg bg-slate-700 px-5 py-2 text-white hover:bg-slate-800"
+                    className="rounded-lg bg-teal-400 px-5 py-2 font-medium text-black transition hover:bg-teal-300"
                 >
                     Voltar
                 </button>
@@ -56,47 +61,57 @@ function DetalhesCategoria(): JSX.Element {
     }
 
     return (
-        <main className="flex-1 px-6 py-8">
+        <main className="min-h-screen flex-1 bg-black px-6 py-8">
             <div className="mx-auto max-w-3xl">
-                <div className="mb-6">
-                    <h1 className="text-3xl font-bold text-slate-800">
+
+                {/* Título da página */}
+                <div className="mb-8">
+                    <h1 className="text-3xl font-bold text-teal-300">
                         Detalhes da Categoria
                     </h1>
 
-                    <p className="mt-1 text-slate-500">
+                    <p className="mt-2 text-gray-400">
                         Visualize as informações da categoria.
                     </p>
                 </div>
 
-                <div className="rounded-xl bg-white p-6 shadow-md">
+                {/* Card principal */}
+                <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-6 shadow-lg">
+
+                    {/* Informações */}
                     <div className="grid gap-6 md:grid-cols-2">
-                        <div>
-                            <p className="text-sm font-medium text-slate-500">
+
+                        {/* ID */}
+                        <div className="rounded-lg bg-zinc-800 p-4">
+                            <p className="text-sm font-medium text-gray-400">
                                 ID
                             </p>
 
-                            <p className="mt-1 text-lg font-semibold text-slate-800">
+                            <p className="mt-2 text-lg font-semibold text-white">
                                 {categoria.id_categoria}
                             </p>
                         </div>
 
-                        <div>
-                            <p className="text-sm font-medium text-slate-500">
+                        {/* Nome */}
+                        <div className="rounded-lg bg-zinc-800 p-4">
+                            <p className="text-sm font-medium text-gray-400">
                                 Nome
                             </p>
 
-                            <p className="mt-1 text-lg font-semibold text-slate-800">
+                            <p className="mt-2 text-lg font-semibold text-white">
                                 {categoria.nome}
                             </p>
                         </div>
+
                     </div>
 
+                    {/* Botão */}
                     <div className="mt-8 flex gap-3">
                         <button
                             onClick={() =>
                                 navigate("/lista/categorias")
                             }
-                            className="rounded-lg bg-slate-200 px-5 py-2 font-medium text-slate-700 hover:bg-slate-300"
+                            className="rounded-lg bg-teal-400 px-5 py-2 font-medium text-black transition hover:bg-teal-300"
                         >
                             Voltar
                         </button>
@@ -108,3 +123,4 @@ function DetalhesCategoria(): JSX.Element {
 }
 
 export default DetalhesCategoria;
+

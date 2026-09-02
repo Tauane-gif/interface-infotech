@@ -1,74 +1,107 @@
-import {
-    useState,
-    useEffect,
-    type JSX,
-    type ChangeEvent,
-} from "react";
-import type CategoriaDTO from "../../dto/CategoriaDTO";
-import CategoriaRequests from "../../fetch/CategoriaRequest";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function ListagemCategorias(): JSX.Element {
+import type CategoriaDTO from "../../dto/CategoriaDTO";
+import CategoriaRequests from "../../fetch/CategoriaRequest";
+
+function ListagemCategorias() {
+    const navigate = useNavigate();
+
     const [categorias, setCategorias] = useState<CategoriaDTO[]>([]);
     const [busca, setBusca] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const [carregando, setCarregando] = useState(true);
 
     const rowsPerPage = 5;
-    const navigate = useNavigate();
+
+    // =========================================================
+    // BUSCAR CATEGORIAS
+    // =========================================================
 
     useEffect(() => {
-        const buscarCategorias = async () => {
+        async function buscarCategorias() {
             try {
                 setCarregando(true);
 
-                const listaDeCategorias =
+                const resposta =
                     await CategoriaRequests.obterListaDeCategorias();
 
-                setCategorias(listaDeCategorias ?? []);
+                console.log("Categorias recebidas:", resposta);
+
+                if (Array.isArray(resposta)) {
+                    setCategorias(resposta);
+                } else {
+                    setCategorias([]);
+                }
             } catch (error) {
                 console.error(
-                    `Erro ao buscar categorias. ${error}`
+                    "Erro ao buscar categorias:",
+                    error
                 );
 
+                setCategorias([]);
+
                 alert(
-                    "Erro ao carregar a listagem de categorias."
+                    "Não foi possível carregar as categorias."
                 );
             } finally {
                 setCarregando(false);
             }
-        };
+        }
 
         buscarCategorias();
     }, []);
 
-    /* FILTRO */
-    const categoriasFiltradas = categorias.filter((categoria) => {
-        const termo = busca.toLowerCase().trim();
+    // =========================================================
+    // BUSCA
+    // =========================================================
 
-        if (!termo) {
-            return true;
+    const termoBusca = busca.trim().toLowerCase();
+
+    const categoriasFiltradas = categorias.filter(
+        (categoria) => {
+            if (!termoBusca) {
+                return true;
+            }
+
+            const nome =
+                categoria.nome?.toLowerCase() ?? "";
+
+            const id =
+                String(categoria.id_categoria);
+
+            return (
+                nome.includes(termoBusca) ||
+                id.includes(termoBusca)
+            );
         }
+    );
 
-        return (
-            categoria.nome?.toLowerCase().includes(termo) ||
-            String(categoria.id_categoria).includes(termo)
-        );
-    });
+    // =========================================================
+    // PAGINAÇÃO
+    // =========================================================
 
-    /* PAGINAÇÃO */
     const totalPages = Math.max(
         1,
         Math.ceil(
-            categoriasFiltradas.length / rowsPerPage
+            categoriasFiltradas.length /
+                rowsPerPage
         )
     );
 
-    const indexOfLastRow =
-        currentPage * rowsPerPage;
+    // Se a busca diminuir a quantidade de páginas,
+    // mantém a página atual dentro do limite.
+    useEffect(() => {
+        if (currentPage > totalPages) {
+            setCurrentPage(totalPages);
+        }
+    }, [currentPage, totalPages]);
 
     const indexOfFirstRow =
-        indexOfLastRow - rowsPerPage;
+        (currentPage - 1) * rowsPerPage;
+
+    const indexOfLastRow =
+        indexOfFirstRow + rowsPerPage;
 
     const currentCategorias =
         categoriasFiltradas.slice(
@@ -76,27 +109,38 @@ function ListagemCategorias(): JSX.Element {
             indexOfLastRow
         );
 
-    const paginate = (pageNumber: number) => {
-        setCurrentPage(
-            Math.min(
-                Math.max(pageNumber, 1),
-                totalPages
-            )
-        );
-    };
+    function mudarPagina(page: number) {
+        if (page < 1) {
+            setCurrentPage(1);
+            return;
+        }
 
-    /* BUSCA */
-    const handleBusca = (
-        event: ChangeEvent<HTMLInputElement>
-    ) => {
+        if (page > totalPages) {
+            setCurrentPage(totalPages);
+            return;
+        }
+
+        setCurrentPage(page);
+    }
+
+    // =========================================================
+    // ALTERAR BUSCA
+    // =========================================================
+
+    function handleBusca(
+        event: React.ChangeEvent<HTMLInputElement>
+    ) {
         setBusca(event.target.value);
         setCurrentPage(1);
-    };
+    }
 
-    /* REMOVER */
-    const handleRemoverCategoria = async (
+    // =========================================================
+    // REMOVER CATEGORIA
+    // =========================================================
+
+    async function handleRemoverCategoria(
         id_categoria: number
-    ) => {
+    ) {
         const confirmar = window.confirm(
             "Você realmente deseja remover esta categoria?"
         );
@@ -110,10 +154,6 @@ function ListagemCategorias(): JSX.Element {
                 id_categoria
             );
 
-            alert(
-                "Categoria removida com sucesso."
-            );
-
             setCategorias(
                 (categoriasAtuais) =>
                     categoriasAtuais.filter(
@@ -121,6 +161,10 @@ function ListagemCategorias(): JSX.Element {
                             categoria.id_categoria !==
                             id_categoria
                     )
+            );
+
+            alert(
+                "Categoria removida com sucesso."
             );
         } catch (error) {
             console.error(
@@ -135,10 +179,14 @@ function ListagemCategorias(): JSX.Element {
 
             alert(mensagem);
         }
-    };
+    }
+
+    // =========================================================
+    // TELA
+    // =========================================================
 
     return (
-        <main className="flex-1 bg-black px-4 py-6 sm:px-6 lg:px-8">
+        <main className="min-h-screen flex-1 bg-black px-4 py-6 sm:px-6 lg:px-8">
 
             <div className="mx-auto w-full max-w-[1500px]">
 
@@ -149,7 +197,7 @@ function ListagemCategorias(): JSX.Element {
                         <div className="mb-1 flex items-center gap-2">
 
                             <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-teal-950 text-teal-400">
-                                <i className="pi pi-tags" />
+                                <i className="pi pi-tags"></i>
                             </span>
 
                             <h1 className="text-2xl font-bold tracking-tight text-teal-400 sm:text-3xl">
@@ -187,7 +235,7 @@ function ListagemCategorias(): JSX.Element {
                     <div className="relative">
 
                         <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-teal-500">
-                            <i className="pi pi-search" />
+                            <i className="pi pi-search"></i>
                         </span>
 
                         <input
@@ -200,7 +248,7 @@ function ListagemCategorias(): JSX.Element {
                             className="w-full rounded-lg border border-zinc-800 bg-black py-3 pl-11 pr-10 text-sm text-slate-200 outline-none transition placeholder:text-slate-500 focus:border-teal-500 focus:ring-2 focus:ring-teal-900"
                         />
 
-                        {busca && (
+                        {busca.length > 0 && (
                             <button
                                 type="button"
                                 onClick={() => {
@@ -209,7 +257,7 @@ function ListagemCategorias(): JSX.Element {
                                 }}
                                 className="absolute right-3 top-1/2 -translate-y-1/2 rounded-md px-2 py-1 text-sm text-slate-400 transition hover:bg-teal-950 hover:text-teal-400"
                             >
-                                <i className="pi pi-times" />
+                                <i className="pi pi-times"></i>
                             </button>
                         )}
 
@@ -220,7 +268,7 @@ function ListagemCategorias(): JSX.Element {
                 {/* TABELA */}
                 <div className="overflow-hidden rounded-xl border border-teal-900 bg-zinc-950 shadow-sm">
 
-                    {/* CABEÇALHO DO CARD */}
+                    {/* CABEÇALHO */}
                     <div className="flex flex-col gap-2 border-b border-teal-900 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
 
                         <div>
@@ -244,7 +292,7 @@ function ListagemCategorias(): JSX.Element {
 
                     </div>
 
-                    {/* TABELA */}
+                    {/* ÁREA DA TABELA */}
                     <div className="overflow-x-auto">
 
                         <table className="w-full min-w-[600px] text-left text-sm">
@@ -271,8 +319,8 @@ function ListagemCategorias(): JSX.Element {
 
                             <tbody className="divide-y divide-zinc-800">
 
-                                {carregando ? (
-
+                                {/* CARREGANDO */}
+                                {carregando && (
                                     <tr>
                                         <td
                                             colSpan={3}
@@ -280,7 +328,7 @@ function ListagemCategorias(): JSX.Element {
                                         >
                                             <div className="flex flex-col items-center gap-3 text-slate-400">
 
-                                                <div className="h-8 w-8 animate-spin rounded-full border-4 border-teal-950 border-t-teal-400" />
+                                                <div className="h-8 w-8 animate-spin rounded-full border-4 border-teal-950 border-t-teal-400"></div>
 
                                                 <span className="text-sm">
                                                     Carregando categorias...
@@ -289,12 +337,14 @@ function ListagemCategorias(): JSX.Element {
                                             </div>
                                         </td>
                                     </tr>
+                                )}
 
-                                ) : currentCategorias.length > 0 ? (
-
+                                {/* CATEGORIAS */}
+                                {!carregando &&
+                                    currentCategorias.length >
+                                        0 &&
                                     currentCategorias.map(
                                         (categoria) => (
-
                                             <tr
                                                 key={
                                                     categoria.id_categoria
@@ -368,38 +418,41 @@ function ListagemCategorias(): JSX.Element {
 
                                             </tr>
                                         )
-                                    )
+                                    )}
 
-                                ) : (
+                                {/* NENHUMA CATEGORIA */}
+                                {!carregando &&
+                                    currentCategorias.length ===
+                                        0 && (
+                                        <tr>
 
-                                    <tr>
+                                            <td
+                                                colSpan={3}
+                                                className="px-5 py-16 text-center"
+                                            >
 
-                                        <td
-                                            colSpan={3}
-                                            className="px-5 py-16 text-center"
-                                        >
+                                                <div className="flex flex-col items-center">
 
-                                            <div className="flex flex-col items-center">
+                                                    <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-teal-950 text-xl text-teal-400">
+                                                        <i className="pi pi-tags"></i>
+                                                    </div>
 
-                                                <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-teal-950 text-xl text-teal-400">
-                                                    <i className="pi pi-tags" />
+                                                    <h3 className="font-semibold text-teal-400">
+                                                        Nenhuma categoria encontrada
+                                                    </h3>
+
+                                                    <p className="mt-1 text-sm text-slate-500">
+                                                        {busca
+                                                            ? "Tente pesquisar por outro nome ou ID."
+                                                            : "Ainda não existem categorias cadastradas."}
+                                                    </p>
+
                                                 </div>
 
-                                                <h3 className="font-semibold text-teal-400">
-                                                    Nenhuma categoria encontrada
-                                                </h3>
+                                            </td>
 
-                                                <p className="mt-1 text-sm text-slate-500">
-                                                    Tente pesquisar por outro nome ou ID.
-                                                </p>
-
-                                            </div>
-
-                                        </td>
-
-                                    </tr>
-
-                                )}
+                                        </tr>
+                                    )}
 
                             </tbody>
 
@@ -441,19 +494,23 @@ function ListagemCategorias(): JSX.Element {
 
                         <div className="flex items-center gap-1">
 
+                            {/* ANTERIOR */}
                             <button
                                 type="button"
                                 onClick={() =>
-                                    paginate(
+                                    mudarPagina(
                                         currentPage - 1
                                     )
                                 }
-                                disabled={currentPage === 1}
+                                disabled={
+                                    currentPage === 1
+                                }
                                 className="rounded-lg border border-zinc-800 bg-black px-3 py-2 text-sm text-teal-400 transition hover:bg-teal-950 disabled:cursor-not-allowed disabled:opacity-40"
                             >
-                                <i className="pi pi-chevron-left" />
+                                <i className="pi pi-chevron-left"></i>
                             </button>
 
+                            {/* PÁGINAS */}
                             {Array.from(
                                 {
                                     length: totalPages,
@@ -466,22 +523,25 @@ function ListagemCategorias(): JSX.Element {
                                     type="button"
                                     key={page}
                                     onClick={() =>
-                                        paginate(page)
+                                        mudarPagina(page)
                                     }
-                                    className={`min-w-9 rounded-lg px-3 py-2 text-sm font-medium transition ${currentPage === page
+                                    className={`min-w-9 rounded-lg px-3 py-2 text-sm font-medium transition ${
+                                        currentPage ===
+                                        page
                                             ? "bg-teal-500 text-black shadow-sm"
                                             : "border border-zinc-800 bg-black text-teal-400 hover:bg-teal-950"
-                                        }`}
+                                    }`}
                                 >
                                     {page}
                                 </button>
 
                             ))}
 
+                            {/* PRÓXIMA */}
                             <button
                                 type="button"
                                 onClick={() =>
-                                    paginate(
+                                    mudarPagina(
                                         currentPage + 1
                                     )
                                 }
@@ -491,7 +551,7 @@ function ListagemCategorias(): JSX.Element {
                                 }
                                 className="rounded-lg border border-zinc-800 bg-black px-3 py-2 text-sm text-teal-400 transition hover:bg-teal-950 disabled:cursor-not-allowed disabled:opacity-40"
                             >
-                                <i className="pi pi-chevron-right" />
+                                <i className="pi pi-chevron-right"></i>
                             </button>
 
                         </div>

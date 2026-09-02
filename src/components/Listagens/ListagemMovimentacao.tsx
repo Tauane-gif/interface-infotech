@@ -25,7 +25,71 @@ function ListagemMovimentacoes(): JSX.Element {
                 const listaDeMovimentacoes =
                     await MovimentacaoRequests.obterListaDeMovimentacoes();
 
-                setMovimentacoes(listaDeMovimentacoes ?? []);
+                // Normaliza os dados recebidos da API para evitar
+                // valores undefined/NaN na tabela.
+                const movimentacoesNormalizadas: MovimentacaoDTO[] = (
+                    listaDeMovimentacoes ?? []
+                ).map((movimentacao: MovimentacaoDTO) => {
+                    const item = movimentacao as MovimentacaoDTO & {
+                        tipo?: string | null;
+                        tipoMovimentacao?: string | null;
+                        preco?: number | string | null;
+                        precoUnitario?: number | string | null;
+                        valorTotal?: number | string | null;
+                    };
+
+                    const motivo = String(item.motivo ?? "").trim();
+
+                    const tipoRecebido = String(
+                        item.tipo_movimentacao ??
+                            item.tipo ??
+                            item.tipoMovimentacao ??
+                            ""
+                    )
+                        .trim()
+                        .toUpperCase();
+
+                    let tipo = tipoRecebido;
+
+                    if (!tipo) {
+                        if (/recebimento|entrada/i.test(motivo)) {
+                            tipo = "ENTRADA";
+                        } else if (/sa[ií]da|retirada/i.test(motivo)) {
+                            tipo = "SAÍDA";
+                        } else {
+                            tipo = "—";
+                        }
+                    }
+
+                    const precoConvertido = Number(
+                        item.preco_unitario ??
+                            item.preco ??
+                            item.precoUnitario
+                    );
+
+                    const precoUnitario = Number.isFinite(precoConvertido)
+                        ? precoConvertido
+                        : 0;
+
+                    const valorConvertido = Number(
+                        item.valor_total ?? item.valorTotal
+                    );
+
+                    const valorTotal = Number.isFinite(valorConvertido)
+                        ? valorConvertido
+                        : Number(item.quantidade ?? 0) * precoUnitario;
+
+                    return {
+                        ...movimentacao,
+                        tipo_movimentacao: tipo,
+                        preco_unitario: precoUnitario,
+                        valor_total: Number.isFinite(valorTotal)
+                            ? valorTotal
+                            : 0,
+                    };
+                });
+
+                setMovimentacoes(movimentacoesNormalizadas);
             } catch (error) {
                 console.error(
                     `Erro ao buscar movimentações. ${error}`
@@ -140,29 +204,37 @@ function ListagemMovimentacoes(): JSX.Element {
     };
 
     /* VALORES MONETÁRIOS */
-    const formatarValor = (valor: number) => {
+    const formatarValor = (valor: number | string | null | undefined) => {
+        const numero = Number(valor);
+
         return new Intl.NumberFormat("pt-BR", {
             style: "currency",
             currency: "BRL",
-        }).format(valor);
+        }).format(Number.isFinite(numero) ? numero : 0);
     };
 
     /* DATA */
     const formatarData = (data: string) => {
+        const dataConvertida = new Date(data);
+
+        if (Number.isNaN(dataConvertida.getTime())) {
+            return "—";
+        }
+
         return new Intl.DateTimeFormat("pt-BR", {
             day: "2-digit",
             month: "2-digit",
             year: "numeric",
             hour: "2-digit",
             minute: "2-digit",
-        }).format(new Date(data));
+        }).format(dataConvertida);
     };
 
     /* TIPO */
     const isEntrada = (movimentacao: MovimentacaoDTO) => {
-        return (
-            movimentacao.tipo_movimentacao?.toUpperCase() === "ENTRADA"
-        );
+        const tipo = movimentacao.tipo_movimentacao?.toUpperCase() ?? "";
+
+        return tipo === "ENTRADA" || tipo === "RECEBIMENTO";
     };
 
     return (

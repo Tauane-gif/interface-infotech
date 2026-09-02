@@ -81,7 +81,7 @@ function Navegacao(): JSX.Element {
                     className="flex items-center gap-2"
                 >
                     <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-teal-400 text-sm font-black text-black shadow-sm">
-                         <img src={logoInfotech} alt="InfoTech Logo" className="h-10 w-auto" />
+                         <img src={logoInfotech} alt="InfoTech Logo" className="h-16 w-auto" />
                     </div>
                 </button>
 

@@ -1,5 +1,5 @@
 import type { JSX } from "react";
-import logo from "../../assets/logoInfotech.png"; // ajuste o caminho conforme sua estrutura de pastas
+import logo from "../../assets/logoInfotech.png";
 
 function BoasVindas(): JSX.Element {
     return (
@@ -8,7 +8,7 @@ function BoasVindas(): JSX.Element {
                 <img
                     src={logo}
                     alt="InfoTech Logo"
-                    className="mx-auto w-64 sm:w-80 md:w-96 mb-6"
+                    className="mx-auto w-96 sm:w-[28rem] md:w-[32rem] mb-2"
                 />
                 <p className="text-sm sm:text-base md:text-lg text-teal-300 leading-relaxed">
                     Bem-vindo à InfoTech! Aqui você encontra tecnologia de verdade,

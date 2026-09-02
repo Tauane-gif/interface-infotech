@@ -157,7 +157,7 @@ function ListagemProdutos(): JSX.Element {
     };
 
     return (
-        <main className="flex-1 bg-violet-50 px-4 py-6 sm:px-6 lg:px-8">
+        <main className="flex-1 bg-black px-4 py-6 sm:px-6 lg:px-8">
 
             <div className="mx-auto w-full max-w-[1500px]">
 
@@ -167,17 +167,17 @@ function ListagemProdutos(): JSX.Element {
                     <div>
                         <div className="mb-1 flex items-center gap-2">
 
-                            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-violet-100 text-violet-700">
+                            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-teal-950 text-teal-400">
                                 <i className="pi pi-box" />
                             </span>
 
-                            <h1 className="text-2xl font-bold tracking-tight text-violet-950 sm:text-3xl">
+                            <h1 className="text-2xl font-bold tracking-tight text-teal-400 sm:text-3xl">
                                 Produtos
                             </h1>
 
                         </div>
 
-                        <p className="text-sm text-slate-500">
+                        <p className="text-sm text-slate-400">
                             Gerencie os produtos cadastrados no sistema.
                         </p>
                     </div>
@@ -189,7 +189,7 @@ function ListagemProdutos(): JSX.Element {
                                 "/cadastro/produto"
                             )
                         }
-                        className="inline-flex items-center justify-center gap-2 rounded-lg bg-violet-700 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-violet-800 hover:shadow-md active:scale-[0.98]"
+                        className="inline-flex items-center justify-center gap-2 rounded-lg bg-teal-500 px-5 py-2.5 text-sm font-semibold text-black shadow-sm transition hover:bg-teal-400 hover:shadow-md active:scale-[0.98]"
                     >
                         <span className="text-lg leading-none">
                             +
@@ -201,11 +201,11 @@ function ListagemProdutos(): JSX.Element {
                 </div>
 
                 {/* BUSCA */}
-                <div className="mb-5 rounded-xl border border-violet-100 bg-white p-4 shadow-sm">
+                <div className="mb-5 rounded-xl border border-teal-900 bg-zinc-950 p-4 shadow-sm">
 
                     <div className="relative">
 
-                        <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-violet-400">
+                        <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-teal-500">
                             <i className="pi pi-search" />
                         </span>
 
@@ -216,7 +216,7 @@ function ListagemProdutos(): JSX.Element {
                             value={busca}
                             onChange={handleBusca}
                             placeholder="Buscar por nome, código ou descrição..."
-                            className="w-full rounded-lg border border-slate-200 bg-violet-50/40 py-3 pl-11 pr-10 text-sm text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-violet-500 focus:bg-white focus:ring-2 focus:ring-violet-200"
+                            className="w-full rounded-lg border border-zinc-800 bg-black py-3 pl-11 pr-10 text-sm text-slate-200 outline-none transition placeholder:text-slate-500 focus:border-teal-500 focus:ring-2 focus:ring-teal-900"
                         />
 
                         {busca && (
@@ -226,7 +226,7 @@ function ListagemProdutos(): JSX.Element {
                                     setBusca("");
                                     setCurrentPage(1);
                                 }}
-                                className="absolute right-3 top-1/2 -translate-y-1/2 rounded-md px-2 py-1 text-sm text-slate-400 transition hover:bg-violet-100 hover:text-violet-700"
+                                className="absolute right-3 top-1/2 -translate-y-1/2 rounded-md px-2 py-1 text-sm text-slate-400 transition hover:bg-teal-950 hover:text-teal-400"
                             >
                                 <i className="pi pi-times" />
                             </button>
@@ -237,17 +237,17 @@ function ListagemProdutos(): JSX.Element {
                 </div>
 
                 {/* TABELA */}
-                <div className="overflow-hidden rounded-xl border border-violet-100 bg-white shadow-sm">
+                <div className="overflow-hidden rounded-xl border border-teal-900 bg-zinc-950 shadow-sm">
 
                     {/* CABEÇALHO DO CARD */}
-                    <div className="flex flex-col gap-2 border-b border-violet-100 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="flex flex-col gap-2 border-b border-teal-900 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
 
                         <div>
-                            <h2 className="font-semibold text-violet-950">
+                            <h2 className="font-semibold text-teal-400">
                                 Lista de produtos
                             </h2>
 
-                            <p className="text-xs text-slate-500">
+                            <p className="text-xs text-slate-400">
                                 {produtosFiltrados.length}{" "}
                                 {produtosFiltrados.length === 1
                                     ? "produto encontrado"
@@ -256,7 +256,7 @@ function ListagemProdutos(): JSX.Element {
                         </div>
 
                         {busca && (
-                            <span className="rounded-full bg-violet-100 px-3 py-1 text-xs font-medium text-violet-700">
+                            <span className="rounded-full bg-teal-950 px-3 py-1 text-xs font-medium text-teal-400">
                                 Busca: "{busca}"
                             </span>
                         )}
@@ -268,7 +268,7 @@ function ListagemProdutos(): JSX.Element {
 
                         <table className="w-full min-w-[900px] text-left text-sm">
 
-                            <thead className="bg-violet-950 text-xs uppercase tracking-wide text-violet-100">
+                            <thead className="bg-teal-500 text-xs uppercase tracking-wide text-black">
 
                                 <tr>
 
@@ -308,7 +308,7 @@ function ListagemProdutos(): JSX.Element {
 
                             </thead>
 
-                            <tbody className="divide-y divide-violet-100">
+                            <tbody className="divide-y divide-zinc-800">
 
                                 {carregando ? (
 
@@ -319,7 +319,7 @@ function ListagemProdutos(): JSX.Element {
                                         >
                                             <div className="flex flex-col items-center gap-3 text-slate-400">
 
-                                                <div className="h-8 w-8 animate-spin rounded-full border-4 border-violet-100 border-t-violet-700" />
+                                                <div className="h-8 w-8 animate-spin rounded-full border-4 border-teal-950 border-t-teal-400" />
 
                                                 <span className="text-sm">
                                                     Carregando produtos...
@@ -338,11 +338,11 @@ function ListagemProdutos(): JSX.Element {
                                                 key={
                                                     produto.id_produto
                                                 }
-                                                className="group transition-colors hover:bg-violet-50/60"
+                                                className="group transition-colors hover:bg-teal-950/40"
                                             >
 
                                                 {/* ID */}
-                                                <td className="px-5 py-4 font-medium text-slate-400">
+                                                <td className="px-5 py-4 font-medium text-slate-500">
                                                     #
                                                     {
                                                         produto.id_produto
@@ -352,7 +352,7 @@ function ListagemProdutos(): JSX.Element {
                                                 {/* CÓDIGO */}
                                                 <td className="px-5 py-4">
 
-                                                    <span className="rounded-md bg-violet-100 px-2.5 py-1 font-mono text-xs font-medium text-violet-700">
+                                                    <span className="rounded-md bg-teal-950 px-2.5 py-1 font-mono text-xs font-medium text-teal-400">
                                                         {
                                                             produto.codigo
                                                         }
@@ -363,7 +363,7 @@ function ListagemProdutos(): JSX.Element {
                                                 {/* NOME */}
                                                 <td className="px-5 py-4">
 
-                                                    <div className="font-semibold text-violet-950">
+                                                    <div className="font-semibold text-teal-300">
                                                         {
                                                             produto.nome
                                                         }
@@ -374,7 +374,7 @@ function ListagemProdutos(): JSX.Element {
                                                 {/* DESCRIÇÃO */}
                                                 <td className="max-w-xs px-5 py-4">
 
-                                                    <p className="truncate text-slate-500">
+                                                    <p className="truncate text-slate-400">
                                                         {
                                                             produto.descricao
                                                         }
@@ -383,7 +383,7 @@ function ListagemProdutos(): JSX.Element {
                                                 </td>
 
                                                 {/* PREÇO */}
-                                                <td className="whitespace-nowrap px-5 py-4 font-semibold text-slate-700">
+                                                <td className="whitespace-nowrap px-5 py-4 font-semibold text-slate-200">
                                                     {formatarPreco(
                                                         produto.preco_unitario
                                                     )}
@@ -396,8 +396,8 @@ function ListagemProdutos(): JSX.Element {
                                                         className={`inline-flex min-w-12 justify-center rounded-full px-2.5 py-1 text-xs font-bold ${estoqueBaixo(
                                                             produto
                                                         )
-                                                                ? "bg-red-100 text-red-700"
-                                                                : "bg-emerald-100 text-emerald-700"
+                                                                ? "bg-red-950 text-red-400"
+                                                                : "bg-emerald-950 text-emerald-400"
                                                             }`}
                                                     >
                                                         {
@@ -408,7 +408,7 @@ function ListagemProdutos(): JSX.Element {
                                                 </td>
 
                                                 {/* MÍNIMA */}
-                                                <td className="px-5 py-4 text-center text-slate-500">
+                                                <td className="px-5 py-4 text-center text-slate-400">
                                                     {
                                                         produto.quantidade_minima
                                                     }
@@ -426,7 +426,7 @@ function ListagemProdutos(): JSX.Element {
                                                                     `/detalhes/produto/${produto.id_produto}`
                                                                 )
                                                             }
-                                                            className="rounded-lg bg-violet-100 px-3 py-2 text-xs font-semibold text-violet-700 transition hover:bg-violet-700 hover:text-white"
+                                                            className="rounded-lg bg-teal-950 px-3 py-2 text-xs font-semibold text-teal-400 transition hover:bg-teal-500 hover:text-black"
                                                         >
                                                             Detalhes
                                                         </button>
@@ -438,7 +438,7 @@ function ListagemProdutos(): JSX.Element {
                                                                     `/atualizar/produto/${produto.id_produto}`
                                                                 )
                                                             }
-                                                            className="rounded-lg bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 transition hover:bg-emerald-600 hover:text-white"
+                                                            className="rounded-lg bg-emerald-950 px-3 py-2 text-xs font-semibold text-emerald-400 transition hover:bg-emerald-500 hover:text-black"
                                                         >
                                                             Editar
                                                         </button>
@@ -450,7 +450,7 @@ function ListagemProdutos(): JSX.Element {
                                                                     produto.id_produto
                                                                 )
                                                             }
-                                                            className="rounded-lg bg-red-50 px-3 py-2 text-xs font-semibold text-red-700 transition hover:bg-red-600 hover:text-white"
+                                                            className="rounded-lg bg-red-950 px-3 py-2 text-xs font-semibold text-red-400 transition hover:bg-red-500 hover:text-black"
                                                         >
                                                             Excluir
                                                         </button>
@@ -474,15 +474,15 @@ function ListagemProdutos(): JSX.Element {
 
                                             <div className="flex flex-col items-center">
 
-                                                <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-violet-100 text-xl text-violet-600">
+                                                <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-teal-950 text-xl text-teal-400">
                                                     <i className="pi pi-box" />
                                                 </div>
 
-                                                <h3 className="font-semibold text-violet-950">
+                                                <h3 className="font-semibold text-teal-400">
                                                     Nenhum produto encontrado
                                                 </h3>
 
-                                                <p className="mt-1 text-sm text-slate-400">
+                                                <p className="mt-1 text-sm text-slate-500">
                                                     Tente pesquisar por outro nome,
                                                     código ou descrição.
                                                 </p>
@@ -502,13 +502,13 @@ function ListagemProdutos(): JSX.Element {
                     </div>
 
                     {/* PAGINAÇÃO */}
-                    <div className="flex flex-col gap-4 border-t border-violet-100 bg-violet-50/50 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="flex flex-col gap-4 border-t border-teal-900 bg-zinc-950 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
 
-                        <p className="text-sm text-slate-500">
+                        <p className="text-sm text-slate-400">
 
                             Mostrando{" "}
 
-                            <span className="font-semibold text-violet-800">
+                            <span className="font-semibold text-teal-400">
                                 {produtosFiltrados.length > 0
                                     ? indexOfFirstRow + 1
                                     : 0}
@@ -516,7 +516,7 @@ function ListagemProdutos(): JSX.Element {
 
                             até{" "}
 
-                            <span className="font-semibold text-violet-800">
+                            <span className="font-semibold text-teal-400">
                                 {Math.min(
                                     indexOfLastRow,
                                     produtosFiltrados.length
@@ -525,7 +525,7 @@ function ListagemProdutos(): JSX.Element {
 
                             de{" "}
 
-                            <span className="font-semibold text-violet-800">
+                            <span className="font-semibold text-teal-400">
                                 {produtosFiltrados.length}
                             </span>{" "}
 
@@ -543,7 +543,7 @@ function ListagemProdutos(): JSX.Element {
                                     )
                                 }
                                 disabled={currentPage === 1}
-                                className="rounded-lg border border-violet-200 bg-white px-3 py-2 text-sm text-violet-700 transition hover:bg-violet-100 disabled:cursor-not-allowed disabled:opacity-40"
+                                className="rounded-lg border border-zinc-800 bg-black px-3 py-2 text-sm text-teal-400 transition hover:bg-teal-950 disabled:cursor-not-allowed disabled:opacity-40"
                             >
                                 <i className="pi pi-chevron-left" />
                             </button>
@@ -563,8 +563,8 @@ function ListagemProdutos(): JSX.Element {
                                         paginate(page)
                                     }
                                     className={`min-w-9 rounded-lg px-3 py-2 text-sm font-medium transition ${currentPage === page
-                                            ? "bg-violet-700 text-white shadow-sm"
-                                            : "border border-violet-200 bg-white text-violet-700 hover:bg-violet-100"
+                                            ? "bg-teal-500 text-black shadow-sm"
+                                            : "border border-zinc-800 bg-black text-teal-400 hover:bg-teal-950"
                                         }`}
                                 >
                                     {page}
@@ -583,7 +583,7 @@ function ListagemProdutos(): JSX.Element {
                                     currentPage ===
                                     totalPages
                                 }
-                                className="rounded-lg border border-violet-200 bg-white px-3 py-2 text-sm text-violet-700 transition hover:bg-violet-100 disabled:cursor-not-allowed disabled:opacity-40"
+                                className="rounded-lg border border-zinc-800 bg-black px-3 py-2 text-sm text-teal-400 transition hover:bg-teal-950 disabled:cursor-not-allowed disabled:opacity-40"
                             >
                                 <i className="pi pi-chevron-right" />
                             </button>

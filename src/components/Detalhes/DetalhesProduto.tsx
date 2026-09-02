@@ -168,19 +168,6 @@ function DetalhesProduto(): JSX.Element {
                         >
                             Voltar
                         </button>
-
-                        <button
-                            type="button"
-                            onClick={() =>
-                                navigate(
-                                    `/atualizar/produto/${produto.id_produto}`
-                                )
-                            }
-                            className="rounded-lg bg-teal-500 px-5 py-2 font-medium text-black transition hover:bg-teal-400"
-                        >
-                            Editar
-                        </button>
-
                     </div>
                 </div>
             </div>

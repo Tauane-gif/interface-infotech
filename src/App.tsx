@@ -61,7 +61,7 @@ function App() {
                     path="/detalhes/produto/:id"
                     element={<PDetalhesProduto />}
                 />
-
+                
             </Routes>
         </BrowserRouter>
     );

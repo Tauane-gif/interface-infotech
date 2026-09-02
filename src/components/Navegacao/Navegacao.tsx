@@ -1,6 +1,7 @@
 import { useState, type JSX } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import AuthRequests from "../../fetch/AuthRequests";
+import avatarImage from "../../assets/fotoperfil.jpg";
 
 function Navegacao(): JSX.Element {
     const [menuAberto, setMenuAberto] = useState(false);
@@ -17,8 +18,7 @@ function Navegacao(): JSX.Element {
     const nome = localStorage.getItem("nome") || "Usuário";
     const email = localStorage.getItem("email") || "";
 
-    const avatarImage =
-        "https://primefaces.org/cdn/primereact/images/avatar/amyelsner.png";
+    
 
     const links = [
         {

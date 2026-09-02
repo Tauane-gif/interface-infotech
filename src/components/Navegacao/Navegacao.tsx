@@ -83,10 +83,6 @@ function Navegacao(): JSX.Element {
                     <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-teal-400 text-sm font-black text-black shadow-sm">
                          <img src={logoInfotech} alt="InfoTech Logo" className="h-10 w-auto" />
                     </div>
-
-                    <span className="text-xl font-bold tracking-tight text-white">
-                        Info<span className="text-teal-400">Tech</span>
-                    </span>
                 </button>
 
                 {/* LINKS DESKTOP */}

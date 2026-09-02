@@ -10,6 +10,9 @@ import PLogin from "./pages/PLogin/PLogin";
 import PListagemProduto from "./pages/PListagemProduto/PListagemProduto";
 import PListagemCategoria from "./pages/PListagemCategoria/PListagemCategoria";
 import PListagemMovimentacao from "./pages/PListagemMovimentacao/PListagemMovimentacao";
+import PDetalhesCategoria from "./pages/PDetalhesCategoria/PDetalhesCategoria";
+import PDetalhesMovimentacao from "./pages/PDetalhesMovimentacao/PDetalhesMovimentacao";
+import PDetalhesProduto from "./pages/PDetalhesProduto/PDetalhesProduto";
 
 function App() {
     return (
@@ -41,6 +44,22 @@ function App() {
                 <Route
                     path="/lista/movimentacoes"
                     element={<PListagemMovimentacao />}
+                />
+                
+                 <Route
+                    path="/detalhes/categoria/:id"
+                    element={<PDetalhesCategoria />}
+                />
+                
+
+                 <Route
+                    path="/detalhes/movimentacao/:id"
+                    element={<PDetalhesMovimentacao />}
+                />
+                
+                 <Route
+                    path="/detalhes/produto/:id"
+                    element={<PDetalhesProduto />}
                 />
 
             </Routes>

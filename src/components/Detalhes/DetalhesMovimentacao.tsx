@@ -277,19 +277,6 @@ function DetalhesMovimentacao(): JSX.Element {
                         >
                             Voltar
                         </button>
-
-                        <button
-                            type="button"
-                            onClick={() =>
-                                navigate(
-                                    `/atualizar/movimentacao/${movimentacao.id_movimentacao}`
-                                )
-                            }
-                            className="rounded-lg bg-teal-500 px-5 py-2 font-medium text-black transition hover:bg-teal-400"
-                        >
-                            Editar
-                        </button>
-
                     </div>
                 </div>
             </div>

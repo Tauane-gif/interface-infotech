@@ -1,7 +1,6 @@
 import { useState, type JSX } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import AuthRequests from "../../fetch/AuthRequests";
-import logoInfotech from "../../assets/logoInfotech.png";
 
 function Navegacao(): JSX.Element {
     const [menuAberto, setMenuAberto] = useState(false);
@@ -81,8 +80,11 @@ function Navegacao(): JSX.Element {
                     className="flex items-center gap-2"
                 >
                     <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-teal-400 text-sm font-black text-black shadow-sm">
-                         <img src={logoInfotech} alt="InfoTech Logo" className="h-30 w-auto" />
                     </div>
+
+                    <span className="text-xl font-bold tracking-tight text-white">
+                        Info<span className="text-teal-400">Tech</span>
+                    </span>
                 </button>
 
                 {/* LINKS DESKTOP */}

@@ -100,17 +100,6 @@ function DetalhesCategoria(): JSX.Element {
                         >
                             Voltar
                         </button>
-
-                        <button
-                            onClick={() =>
-                                navigate(
-                                    `/atualizar/categoria/${categoria.id_categoria}`
-                                )
-                            }
-                            className="rounded-lg bg-blue-600 px-5 py-2 font-medium text-white hover:bg-blue-700"
-                        >
-                            Editar
-                        </button>
                     </div>
                 </div>
             </div>

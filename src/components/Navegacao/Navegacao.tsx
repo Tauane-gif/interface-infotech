@@ -79,8 +79,6 @@ function Navegacao(): JSX.Element {
                     onClick={() => navegar("/")}
                     className="flex items-center gap-2"
                 >
-                    <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-teal-400 text-sm font-black text-black shadow-sm">
-                    </div>
 
                     <span className="text-xl font-bold tracking-tight text-white">
                         Info<span className="text-teal-400">Tech</span>

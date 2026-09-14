@@ -1,4 +1,5 @@
 import "./App.css";
+
 import {
     BrowserRouter,
     Routes,
@@ -7,16 +8,22 @@ import {
 
 import PHome from "./pages/PHome/PHome";
 import PLogin from "./pages/PLogin/PLogin";
+import PConhecaLoja from "./pages/PConhecaLoja/PConhecaLoja";
+
 import PListagemProduto from "./pages/PListagemProduto/PListagemProduto";
 import PListagemCategoria from "./pages/PListagemCategoria/PListagemCategoria";
 import PListagemMovimentacao from "./pages/PListagemMovimentacao/PListagemMovimentacao";
+
 import PDetalhesCategoria from "./pages/PDetalhesCategoria/PDetalhesCategoria";
 import PDetalhesMovimentacao from "./pages/PDetalhesMovimentacao/PDetalhesMovimentacao";
 import PDetalhesProduto from "./pages/PDetalhesProduto/PDetalhesProduto";
 
 function App() {
+
     return (
+
         <BrowserRouter>
+
             <Routes>
 
                 <Route
@@ -29,13 +36,16 @@ function App() {
                     element={<PLogin />}
                 />
 
-     
+                <Route
+                    path="/conheca-loja"
+                    element={<PConhecaLoja />}
+                />
+
                 <Route
                     path="/lista/produtos"
                     element={<PListagemProduto />}
                 />
 
-          
                 <Route
                     path="/lista/categorias"
                     element={<PListagemCategoria />}
@@ -45,24 +55,24 @@ function App() {
                     path="/lista/movimentacoes"
                     element={<PListagemMovimentacao />}
                 />
-                
-                 <Route
+
+                <Route
                     path="/detalhes/categoria/:id"
                     element={<PDetalhesCategoria />}
                 />
-                
 
-                 <Route
+                <Route
                     path="/detalhes/movimentacao/:id"
                     element={<PDetalhesMovimentacao />}
                 />
-                
-                 <Route
+
+                <Route
                     path="/detalhes/produto/:id"
                     element={<PDetalhesProduto />}
                 />
-                  
+
             </Routes>
+
         </BrowserRouter>
     );
 }

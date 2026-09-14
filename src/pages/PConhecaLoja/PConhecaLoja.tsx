@@ -1,6 +1,7 @@
 import type { JSX } from "react";
 
-function ConhecaLoja(): JSX.Element {
+function PConhecaLoja(): JSX.Element {
+
     return (
         <main className="min-h-screen bg-black text-white px-6 py-16">
 
@@ -16,9 +17,7 @@ function ConhecaLoja(): JSX.Element {
 
                 <p className="text-gray-400 max-w-2xl leading-relaxed">
                     A InfoTech Informática é uma loja especializada em produtos
-                    e acessórios para computadores e setups. Trabalhamos com
-                    teclados, mouses, monitores, cabos, fontes, memórias, SSDs
-                    e diversos outros produtos.
+                    e acessórios para computadores e setups.
                 </p>
 
             </div>
@@ -27,4 +26,4 @@ function ConhecaLoja(): JSX.Element {
     );
 }
 
-export default ConhecaLoja;
+export default PConhecaLoja;

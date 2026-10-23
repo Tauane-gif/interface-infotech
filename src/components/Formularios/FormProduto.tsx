@@ -1,5 +1,5 @@
-import type ProdutoDTO from '../../dto/ProdutoDTO'; 
-const API_URL = import.meta.env.VITE_API_SERVER_URL;
+import type ProdutoDTO from '../../dto/ProdutoDTO';
+import { API_URL } from '../../config/api';
 
 class AuthRequests {
 

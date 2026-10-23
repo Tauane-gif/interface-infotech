@@ -1,4 +1,5 @@
 import "./App.css";
+
 import {
     BrowserRouter,
     Routes,
@@ -7,9 +8,12 @@ import {
 
 import PHome from "./pages/PHome/PHome";
 import PLogin from "./pages/PLogin/PLogin";
+import PConhecaLoja from "./pages/PConhecaLoja/PConhecaLoja";
+
 import PListagemProduto from "./pages/PListagemProduto/PListagemProduto";
 import PListagemCategoria from "./pages/PListagemCategoria/PListagemCategoria";
 import PListagemMovimentacao from "./pages/PListagemMovimentacao/PListagemMovimentacao";
+
 import PDetalhesCategoria from "./pages/PDetalhesCategoria/PDetalhesCategoria";
 import PDetalhesMovimentacao from "./pages/PDetalhesMovimentacao/PDetalhesMovimentacao";
 import PDetalhesProduto from "./pages/PDetalhesProduto/PDetalhesProduto";
@@ -18,8 +22,11 @@ import PEditarCategoria from "./pages/PEditarCategoria/PEditarCategoria";
 import PEditarMovimentacao from "./pages/PEditarMovimentacao/PEditarMovimentacao";
 
 function App() {
+
     return (
+
         <BrowserRouter>
+
             <Routes>
 
                 <Route
@@ -32,13 +39,16 @@ function App() {
                     element={<PLogin />}
                 />
 
-     
+                <Route
+                    path="/conheca-loja"
+                    element={<PConhecaLoja />}
+                />
+
                 <Route
                     path="/lista/produtos"
                     element={<PListagemProduto />}
                 />
 
-          
                 <Route
                     path="/lista/categorias"
                     element={<PListagemCategoria />}
@@ -48,22 +58,22 @@ function App() {
                     path="/lista/movimentacoes"
                     element={<PListagemMovimentacao />}
                 />
-                
-                 <Route
+
+                <Route
                     path="/detalhes/categoria/:id"
                     element={<PDetalhesCategoria />}
                 />
-                
 
-                 <Route
+                <Route
                     path="/detalhes/movimentacao/:id"
                     element={<PDetalhesMovimentacao />}
                 />
-                
-                 <Route
+
+                <Route
                     path="/detalhes/produto/:id"
                     element={<PDetalhesProduto />}
                 />
+<<<<<<< HEAD
                 
                  <Route
                     path="/atualizar/produto/:id"
@@ -81,7 +91,11 @@ function App() {
                 />
                 
                 
+=======
+
+>>>>>>> 55950f6d90f6382235a87ce83074d874483b38fc
             </Routes>
+
         </BrowserRouter>
     );
 }

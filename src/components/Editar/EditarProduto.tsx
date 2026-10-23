@@ -82,9 +82,13 @@ function EditarProduto(): JSX.Element {
                 Number(id),
                 {
                     id_produto: produto.id_produto,
-                    nome: nome.trim(),
                     id_categoria: Number(idCategoria),
+                    codigo: produto.codigo,
+                    nome: nome.trim(),
                     descricao: descricao.trim(),
+                    preco_unitario: produto.preco_unitario,
+                    quantidade_disponivel: produto.quantidade_disponivel,
+                    quantidade_minima: produto.quantidade_minima,
                 }
             );
 

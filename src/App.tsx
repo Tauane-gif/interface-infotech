@@ -13,6 +13,9 @@ import PListagemMovimentacao from "./pages/PListagemMovimentacao/PListagemMovime
 import PDetalhesCategoria from "./pages/PDetalhesCategoria/PDetalhesCategoria";
 import PDetalhesMovimentacao from "./pages/PDetalhesMovimentacao/PDetalhesMovimentacao";
 import PDetalhesProduto from "./pages/PDetalhesProduto/PDetalhesProduto";
+import PEditarProduto from "./pages/PEditarProduto/PEditarProduto";
+import PEditarCategoria from "./pages/PEditarCategoria/PEditarCategoria";
+import PEditarMovimentacao from "./pages/PEditarMovimentacao/PEditarMovimentacao";
 
 function App() {
     return (
@@ -61,6 +64,22 @@ function App() {
                     path="/detalhes/produto/:id"
                     element={<PDetalhesProduto />}
                 />
+                
+                 <Route
+                    path="/atualizar/produto/:id"
+                    element={<PEditarProduto />}
+                />
+                
+                   <Route
+                    path="/atualizar/categoria/:id"
+                    element={<PEditarCategoria />}
+                />
+
+                   <Route
+                    path="/atualizar/movimentacao/:id"
+                    element={<PEditarMovimentacao />}
+                />
+                
                 
             </Routes>
         </BrowserRouter>

@@ -73,27 +73,22 @@ function App() {
                     path="/detalhes/produto/:id"
                     element={<PDetalhesProduto />}
                 />
-<<<<<<< HEAD
-                
-                 <Route
+
+                <Route
                     path="/atualizar/produto/:id"
                     element={<PEditarProduto />}
                 />
-                
-                   <Route
+
+                <Route
                     path="/atualizar/categoria/:id"
                     element={<PEditarCategoria />}
                 />
 
-                   <Route
+                <Route
                     path="/atualizar/movimentacao/:id"
                     element={<PEditarMovimentacao />}
                 />
-                
-                
-=======
 
->>>>>>> 55950f6d90f6382235a87ce83074d874483b38fc
             </Routes>
 
         </BrowserRouter>
